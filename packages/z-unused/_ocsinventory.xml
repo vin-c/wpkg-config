@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<packages>
+	<package
+	        id="ocsinventoryagent"
+	        name="OCS Inventory Agent"
+	        revision="4032"
+	        priority="60"
+	        reboot="false">
+	 
+	        <check type="uninstall" condition="exists" path="OCS Inventory Agent 4.0.3.2" />
+	        <install cmd='%SOFTWARE%\ocsagent\ocspackage-ehpad-stefamille.exe' />
+	        <upgrade cmd='%SOFTWARE%\ocsagent\ocspackage-ehpad-stefamille.exe' />
+	</package>
+</packages>

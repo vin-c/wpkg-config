@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<packages>
+<package
+   id="cq9303"
+   name="Xerox 9303 drivers"
+   revision="1"
+   reboot="false"
+   priority="0">
+   
+   <variable name="arch" value="x64" architecture="x64"/>
+   <variable name="arch" value="x86" architecture="x86"/>
+
+	   <!-- XXX this check is inadequate. Wpkg doesn't handle REG_BINARY very well. -->
+	   <!-- Note: the packages only provide x86 drivers, so no other arch are checked -->
+	 
+	   <check type="logical" condition="or">
+	     <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows NT x86\Drivers\Version-3\Ricoh mpc4000 PCL 6\Data File" value="RIC634K.DLL" />
+	     <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows x64\Drivers\Version-3\Ricoh mpc4000 PCL 6\Data File" value="RIC634K.DLL" />
+	   </check>
+	 
+	   <install cmd='%COMSPEC% /C if not exist "%PROGRAMFILES(x86)%" rundll32 PrintUI.dll,PrintUIEntry /ia /f "%SOFTWARE%\printer\drivers\z52397L6\32bit\oemsetup.inf" /m "RICOH mpc4000 PCL 6" /q' />
+	   <install cmd='%COMSPEC% /C if exist "%PROGRAMFILES(x86)%" rundll32 PrintUI.dll,PrintUIEntry /ia /f "%SOFTWARE%\printer\drivers\z52401L6\64bit\oemsetup.inf" /m "RICOH mpc4000 PCL 6" /q' />
+</package>
+</packages>

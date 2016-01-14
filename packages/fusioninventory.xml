@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="fusioninventory"
+   name="FusionInventory Agent"
+   revision="%version%"
+   reboot="false"
+   priority="170">
+
+   <variable name="version" value="2.3.2" />
+   <variable name="tag" value="lph" />
+   <variable name="arch" value="x64" architecture="x64"/>
+   <variable name="arch" value="x86" architecture="x86"/>
+   <variable name="serverlist" value="https://support.lph.im/plugins/fusioninventory/" />
+
+   <check type="uninstall" condition="versiongreaterorequal" path="FusionInventory Agent.*" value="%version%" />
+
+   <install cmd='%SOFTWARE%\fusioninventory\fusioninventory-agent_windows-%arch%_%version%.exe /acceptlicense /execmode="service" /installtasks="deploy,inventory" /no-ssl-check /runnow /tag=%tag% /server="%serverlist%" /S' />
+
+   <upgrade cmd='%SOFTWARE%\fusioninventory\fusioninventory-agent_windows-%arch%_%version%.exe /acceptlicense /execmode="service" /installtasks="deploy,inventory" /no-ssl-check /runnow /tag=%tag% /server="%serverlist%" /S' />
+
+   <remove cmd='"%PROGRAMFILES%\FusionInventory-Agent\Uninstall.exe" /S _?=%PROGRAMFILES%\FusionInventory-Agent' />
+</package>
+</packages>

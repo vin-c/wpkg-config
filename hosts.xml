@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hosts:wpkg xmlns:hosts="http://www.wpkg.org/hosts" xmlns:wpkg="http://www.wpkg.org/wpkg"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.wpkg.org/hosts xsd/hosts.xsd ">
+
+   <host name="LPHTOW003" profile-id="cq8900rh" /> <!-- n.darocha -->
+   <host name="LPHTOW006" profile-id="cq8900rh" /> <!-- c.ortega -->
+
+	<!--
+		This specification uses a regular expression for host name matching.
+		See <http://wpkg.org/index.php/Regular_expression_support> for more
+		details.
+		This will match any non-empty hostname and assign it the "other"
+		profile. So the entry acts as a kind of "catch all" entry. All hosts
+		which are not matched by a more-specific host entry appearing before
+		this one will be assigned the "other" profile.
+		Note: In case you enabled the applyMultiple option in config.xml this
+		will assign the "other" profile to all hosts in addition to any more-
+		precise host specification applying before.
+	-->
+
+   <host name=".+" profile-id="default" />
+
+</hosts:wpkg>

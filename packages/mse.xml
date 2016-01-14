@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="mse"
+   name="Microsoft Security Essentials"
+   revision="1"
+   reboot="false"
+   priority="10">
+
+   <check type="uninstall" condition="exists" path="Microsoft Security Essentials"/>
+
+   <variable name="INSTALLER_NAME" value="mseinstall-Win7_32.exe" architecture="x86"/>
+   <variable name="INSTALLER_NAME" value="mseinstall-Win7_64.exe" architecture="x64" />
+
+   <install cmd='%SOFTWARE%\mse\%INSTALLER_NAME% /s /o /runwgacheck' />
+
+   <upgrade include="install"/>
+
+   <remove cmd='%SOFTWARE%\mse\%INSTALLER_NAME% /s /u' />
+
+</package>
+</packages>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="firefox"
+   name="Mozilla Firefox"
+   revision="%version%"
+   reboot="false"
+   priority="110">
+
+   <variable name="version"         value="24.0esr" />
+   <variable name="shortversion"    value="24.0" />
+   <variable name="architecture"    value="x86" />
+   <variable name="locale"          value="fr" />
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES%\Mozilla Firefox"       architecture="x86"/>
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES(x86)%\Mozilla Firefox"  architecture="x64"/>
+
+   <check type="uninstall" condition="exists" path="Mozilla Firefox %shortversion% (%architecture% %locale%)" />
+ 
+   <install cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="-1073741515" />
+      <exit code="128" />
+   </install>
+ 
+   <install cmd='"%SOFTWARE%\firefox\Firefox Setup %version%.exe" -ms' />
+ 
+   <upgrade include="install" />
+ 
+   <remove cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+      <exit code="-1073741515" />
+   </remove>
+
+   <remove cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\uninstall\helper.exe" "%PKG_DESTINATION%\uninstall\helper.exe" -ms' />
+
+</package>
+
+<package id="firefox-cfd"
+   name="cck-cfd"
+   revision="%version%"
+   priority="109">
+
+   <variable name="version"   value="0.1" />
+   <variable name="extid"     value="cck-cfd@lph.im" />
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES%\Mozilla Firefox"       architecture="x86"/>
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES(x86)%\Mozilla Firefox"  architecture="x64"/>
+
+   <check type="file" condition="exists" path="%PKG_DESTINATION%\distribution\bundles\%extid%\chrome.manifest" />
+
+   <install cmd='%COMSPEC% /C xcopy /E /Y /Q "%SOFTWARE%\firefox\%extid%" "%PKG_DESTINATION%\distribution\bundles\%extid%\"' />
+  <!-- <install cmd='%COMSPEC% /C reg add "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /d "%PKG_DESTINATION%\distribution\bundles\%extid%" /f' /> -->
+
+   <upgrade cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+   </upgrade>
+   <upgrade cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\distribution\bundles\%extid%" rmdir /q /s "%PKG_DESTINATION%\distribution\bundles\%extid%"' />
+   <upgrade cmd='%COMSPEC% /C xcopy /E /Y /Q "%SOFTWARE%\firefox\%extid%" "%PKG_DESTINATION%\distribution\bundles\%extid%\"' />
+  <!-- <upgrade cmd='%COMSPEC% /C reg add "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /d "%PKG_DESTINATION%\distribution\bundles\%extid%" /f' /> -->
+
+   <remove cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+   </remove>
+   <remove cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\distribution\bundles\%extid%" rmdir /q /s "%PKG_DESTINATION%\distribution\bundles\%extid%"' />
+  <!-- <remove cmd='%COMSPEC% /C reg delete "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /f' /> -->
+
+</package>
+
+<package id="firefox-adblock"
+   name="Adblock Edge"
+   revision="%version%"
+   priority="108">
+
+   <variable name="version"   value="2.0.7" />
+   <variable name="extid"     value="{fe272bd1-5f76-4ea4-8501-a05d35d823fc}" />
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES%\Mozilla Firefox"       architecture="x86"/>
+   <variable name="PKG_DESTINATION" value="%PROGRAMFILES(x86)%\Mozilla Firefox"  architecture="x64"/>
+
+   <check type="file" condition="exists" path="%PKG_DESTINATION%\distribution\extensions\%extid%\chrome.manifest" />
+
+   <install cmd='%COMSPEC% /C xcopy /E /Y /Q "%SOFTWARE%\firefox\%extid%" "%PKG_DESTINATION%\distribution\extensions\%extid%\"' />
+  <!-- <install cmd='%COMSPEC% /C reg add "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /d "%PKG_DESTINATION%\distribution\extensions\%extid%" /f' /> -->
+
+   <upgrade cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+   </upgrade>
+   <upgrade cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\distribution\extensions\%extid%" rmdir /q /s "%PKG_DESTINATION%\distribution\extensions\%extid%"' />
+   <upgrade cmd='%COMSPEC% /C xcopy /E /Y /Q "%SOFTWARE%\firefox\%extid%" "%PKG_DESTINATION%\distribution\extensions\%extid%\"' />
+  <!-- <upgrade cmd='%COMSPEC% /C reg add "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /d "%PKG_DESTINATION%\distribution\extensions\%extid%" /f' /> -->
+
+   <remove cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+   </remove>
+   <remove cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\distribution\extensions\%extid%" rmdir /q /s "%PKG_DESTINATION%\distribution\extensions\%extid%"' />
+  <!-- <remove cmd='%COMSPEC% /C reg delete "HKLM\Software\Mozilla\Firefox\Extensions" /v %extid% /f' /> -->
+
+</package>
+</packages>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="jre"
+   name="Java(TM) 7"
+   revision="%version%"
+   reboot="false"
+   priority="90">
+
+   <variable name="updatever" value="45" />
+   <variable name="shortupdatever" value="45" />
+   <variable name="version" value="7.0.%updatever%" />
+   <variable name="autoupdate" value="0" />
+
+   <check architecture="x86" type="file" condition="exists" path="%PROGRAMFILES%\Java\jre7\bin\java.exe" />
+   <check architecture="x64" type="file" condition="exists" path="%PROGRAMFILES(X86)%\Java\jre7\bin\java.exe" />
+   <check type="logical" condition="or">
+      <check type="uninstall" condition="exists" path="Java 7" />
+      <check type="uninstall" condition="exists" path="Java 7 Update %updatever%" />
+      <check type="uninstall" condition="exists" path="Java 7 Update %shortupdatever%" />
+   </check>
+   <check architecture="x64" type="logical" condition="or">
+      <check type="uninstall" condition="exists" path="Java 7 (64-bit)" />
+      <check type="uninstall" condition="exists" path="Java 7 Update %updatever% (64-bit)" />
+      <check type="uninstall" condition="exists" path="Java 7 Update %shortupdatever% (64-bit)" />
+   </check>
+
+   <install cmd='taskkill /f /im jqs.exe /im iexplore.exe /im firefox.exe'>
+      <exit code='any' />
+   </install>
+
+   <!-- .exe install (XP, 2003) -->
+   <install os=".+5\.[1-2]\.\d{4}" cmd='%SOFTWARE%\java\jre-7u%shortupdatever%-windows-i586.exe /s REBOOT=Suppress JAVAUPDATE=%autoupdate% CUSTOM=1' />
+
+   <!-- .msi (Seven) install http://wpkg.org/Java#Install_JRE_with_msi_without_removing_old_version_in_a_mixed_32-bit.2F64-bit_environment -->
+   <install os=".+6\.[0-1]\.\d{4}" cmd='msiexec /qn /i %SOFTWARE%\java\jre1.7.0_%updatever%\jre1.7.0_%updatever%.msi REBOOT=Suppress JAVAUPDATE=%autoupdate% CUSTOM=1' />
+   <install os=".+6\.[0-1]\.\d{4}" cmd='msiexec /qn /i %SOFTWARE%\java\jre1.7.0_%updatever%_x64\jre1.7.0_%updatever%.msi REBOOT=Suppress JAVAUPDATE=%autoupdate% CUSTOM=1' architecture="x64" />
+
+   <!-- remove Java Quick Starter -->
+   <install cmd='%COMSPEC% /C if exist "%PROGRAMFILES%\Java\jre7\bin\jqs.exe" "%PROGRAMFILES%\Java\jre7\bin\jqs.exe" -unregister'>
+      <exit code='any' />
+   </install>
+   <install cmd='%COMSPEC% /C if exist "%PROGRAMFILES(x86)%\Java\jre7\bin\jqs.exe" "%PROGRAMFILES(x86)%\Java\jre7\bin\jqs.exe" -unregister'>
+      <exit code='any' />
+   </install>
+
+   <!-- disable Java Auto Update -->
+   <install cmd='REG DELETE HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v SunJavaUpdateSched /f'>
+      <exit code='any' />
+   </install>
+
+   <!-- remove Java Auto Update -->
+   <!--
+   <install cmd='msiexec /qn /x {4A03706F-666A-4037-7777-5F2748764D10}' />
+   <upgrade cmd='msiexec /qn /x {4A03706F-666A-4037-7777-5F2748764D10}' />
+   -->
+
+   <downgrade include="install" />
+
+   <upgrade include="install" />
+
+   <remove cmd='msiexec /qn /x {26A24AE4-039D-4CA4-87B4-2F832170%updatever%FF}' />
+   <remove cmd='msiexec /qn /x {26A24AE4-039D-4CA4-87B4-2F864170%updatever%FF}' architecture="x64" />
+
+</package>
+</packages>

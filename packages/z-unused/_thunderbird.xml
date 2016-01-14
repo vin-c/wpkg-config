@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<packages>
+
+<package
+     id="thunderbird"
+     name="Mozilla Thunderbird"
+     revision="%version%"
+     reboot="false"
+     priority="10">
+
+  <variable name="version" value="10.0.2" />
+  <variable name="architecture" value="x86" />
+  <variable name="locale" value="fr" />
+ 
+  <check type="uninstall" condition="exists" path="Mozilla Thunderbird %version% (%architecture% %locale%)" />
+ 
+  <install cmd='"%SOFTWARE%\thunderbird\Thunderbird Setup %version%.exe" -ms' />
+  <install cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\all.js" "%PROGRAMFILES%\Mozilla Thunderbird\defaults\pref\all.js"' />
+  <install cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\mozilla.cfg" "%PROGRAMFILES%\Mozilla Thunderbird\mozilla.cfg"' />
+  <install cmd='cmd /C mkdir "%PROGRAMFILES%\Mozilla Thunderbird\defaults\profile"' />
+  <install cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\cert8.db" "%PROGRAMFILES%\Mozilla Thunderbird\defaults\profile\cert8.db"' />
+
+  <upgrade cmd='taskkill /F /IM thunderbird.exe'>
+    <exit code="0" />
+    <exit code="128" />
+  </upgrade>
+
+  <upgrade cmd='"%SOFTWARE%\thunderbird\Thunderbird Setup %version%.exe" -ms' />
+  <upgrade cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\all.js" "%PROGRAMFILES%\Mozilla Thunderbird\defaults\pref\all.js"' />
+  <upgrade cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\mozilla.cfg" "%PROGRAMFILES%\Mozilla Thunderbird\mozilla.cfg"' />
+  <upgrade cmd='cmd /C mkdir "%PROGRAMFILES%\Mozilla Thunderbird\defaults\profile"' />
+  <upgrade cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\autoconfig\cert8.db" "%PROGRAMFILES%\Mozilla Thunderbird\defaults\profile\cert8.db"' />
+
+  <remove cmd='taskkill /F /IM thunderbird.exe'>
+    <exit code="0" />
+    <exit code="128" />
+  </remove>
+
+  <!-- for 32bit and 64bit System -->
+  <remove cmd='%COMSPEC% /C if exist "%PROGRAMFILES%\Mozilla Thunderbird\uninstall\helper.exe" "%PROGRAMFILES%\Mozilla Thunderbird\uninstall\helper.exe" -ms' />
+  <remove cmd='%COMSPEC% /C if exist "%PROGRAMFILES(x86)%\Mozilla Thunderbird\uninstall\helper.exe" "%PROGRAMFILES(x86)%\Mozilla Thunderbird\uninstall\helper.exe" -ms' />
+</package>
+ 
+<package
+     id="sogo-integrator"
+     name="SOGo Integrator extension for Mozilla Thunderbird"
+     revision="%version%"
+     reboot="false"
+     priority="20">
+
+  <variable name="version" value="10.0" />
+
+  <check type="file" condition="exists" path="%PROGRAMFILES%\Mozilla Thunderbird\extensions\sogo-integrator@inverse.ca.xpi" />
+
+  <install cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\sogo-integrator-10.0-phyto.xpi" "%PROGRAMFILES%\Mozilla Thunderbird\extensions\sogo-integrator@inverse.ca.xpi"' />
+
+  <upgrade cmd='cmd /C copy /Y "%SOFTWARE%\thunderbird\sogo-integrator-10.0-phyto.xpi" "%PROGRAMFILES%\Mozilla Thunderbird\extensions\sogo-integrator@inverse.ca.xpi"' />
+
+  <remove cmd='cmd /C del /Y "%PROGRAMFILES\Mozilla Thunderbird\extensions\sogo-integrator@inverse.ca.xpi"' />
+</package>
+
+</packages>

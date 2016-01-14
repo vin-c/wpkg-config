@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<packages>
+
+	<package 
+		id="cdburnerxp"
+		name="CDBurnerXP 4.4.0"
+		revision="440"
+		reboot="false"
+		priority="0">
+ 
+		<check type="logical" condition="and">
+			<check type="uninstall" condition="exists" path="CDBurnerXP" />
+			<check type='file' condition='versiongreaterorequal' path='%ProgramFiles%\CDBurnerXP\cdbxpp.exe' value='4.4.0.2838' />
+		</check>
+ 
+		<install cmd='"%SOFTWARE%\cdburnerxp\cdbxp_setup_4.4.0.2838.exe" /verysilent ALLUSERS=1 /LOADINF="%SOFTWARE%\cdburnerxp\default.cfg"' />
+		<install cmd='CMD /c del "%ALLUSERSPROFILE%\Desktop\CDBurnerXP.lnk"' />
+ 
+		<upgrade cmd='"%SOFTWARE%\cdburnerxp\cdbxp_setup_4.4.0.2838.exe" /verysilent ALLUSERS=1 /LOADINF="%SOFTWARE%\cdburnerxp\default.cfg"' />
+		<upgrade cmd='CMD /c del "%ALLUSERSPROFILE%\Desktop\CDBurnerXP.lnk"' />
+ 
+		<remove cmd='"%programfiles%\CDBurnerXP\unins000.exe" /VERYSILENT' />
+ 
+	</package>
+
+</packages>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="wpkgclient"
+   name="WPKG Client"
+   revision="%version%"
+   reboot="false"
+   priority="200">
+
+   <variable name="version" value="1.3.14" />
+   <variable name="SOFTWARE" value="\\srv\wpkg\softwares" />
+   <check type="uninstall" condition="versionequalto" path="WPKG" value="%version%"/>
+
+   <install architecture="x86" cmd='msiexec /qn /i "%SOFTWARE%\wpkgclient\WPKG-Client-%version%-x32.msi" ALLUSERS=1 SETTINGSFILE="%SOFTWARE%\wpkgclient\settings.xml" /norestart'>
+      <exit code="3010" reboot="false" />
+   </install>
+
+   <upgrade architecture="x86" cmd='msiexec /norestart /qn /i "%SOFTWARE%\wpkgclient\WPKG-Client-%version%-x32.msi" ALLUSERS=1 SETTINGSFILE="%SOFTWARE%\wpkgclient\settings.xml" /norestart'>
+      <exit code="3010" reboot="false" />
+   </upgrade>
+   
+   <install architecture="x64" cmd='msiexec /qn /i "%SOFTWARE%\wpkgclient\WPKG-Client-%version%-x64.msi" ALLUSERS=1 SETTINGSFILE="%SOFTWARE%\wpkgclient\settings.xml" /norestart'>
+      <exit code="3010" reboot="false" />
+   </install>
+
+   <upgrade architecture="x64" cmd='msiexec /norestart /qn /i "%SOFTWARE%\wpkgclient\WPKG-Client-%version%-x64.msi" ALLUSERS=1 SETTINGSFILE="%SOFTWARE%\wpkgclient\settings.xml" /norestart'>
+      <exit code="3010" reboot="false" />
+   </upgrade>
+
+   <remove cmd='msiexec /x{08DF8731-5B69-4709-979A-CC08E49D7686} /qn' />
+
+</package>
+</packages>

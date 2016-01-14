@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="pdfcreator"
+   name="PDFCreator"
+   revision="%PKG_VERSION%"
+   reboot="false"
+   priority="150">
+
+   <variable name="PKG_VERSION"      value="1.7.1" />
+   <variable name="PKG_EXE_VERSION"  value="1.7.0.1" />
+   <variable name="PKG_EXE_NAME"     value="PDFCreator-1_7_1_setup.exe" />
+   <variable name="PKG_DESTINATION"  value="%ProgramFiles%\PDFCreator"      architecture="x86"/>
+   <variable name="PKG_DESTINATION"  value="%ProgramFiles(x86)%\PDFCreator" architecture="x64"/>
+
+   <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION%\PDFCreator.exe" value="%PKG_EXE_VERSION%" />
+   <commands>           
+      <command type="install" timeout="300" cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\unins000.exe" "%PKG_DESTINATION%\unins000.exe" /VERYSILENT' /> 
+      <command type="install" timeout="300" cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\unins001.exe" "%PKG_DESTINATION%\unins001.exe" /VERYSILENT' />
+      <command type="install" timeout="400" cmd='%SOFTWARE%\pdfcreator\%PKG_EXE_NAME% /LOADINF="%SOFTWARE%\pdfcreator\PDFCreator.inf" /DontUseYahooSearch /VERYSILENT /NORESTART /SP-' />
+      <command type="install" timeout="300" cmd='%COMSPEC% /C REG ADD "HKLM\SOFTWARE\PDFCreator\Program" /v "UpdateInterval" /t REG_SZ /d "0" /f' />
+      <!-- enable the following lines if you have problems with ocx not registered, it also helps to run pdfcreator as admin once -->      
+         <!-- <command type="install" cmd="regsvr32 /s %SYSTEMROOT%\SysWOW64\MSCOMCTL.OCX"/> -->
+         <!-- <command type="install" cmd="regsvr32 /s %SYSTEMROOT%\SysWOW64\MSCOMCT2.OCX"/> -->
+
+      <command type="upgrade" include="install" />
+
+      <command type="remove" timeout="300" cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\unins000.exe" "%PKG_DESTINATION%\unins000.exe" /VERYSILENT' />
+      <command type="remove" timeout="300" cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%\unins001.exe" "%PKG_DESTINATION%\unins001.exe" /VERYSILENT' />
+      <command type="remove" timeout="300" cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%" rmdir /q /s "%PKG_DESTINATION%"' />
+
+   </commands>   
+</package>
+</packages>

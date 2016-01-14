@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<!-- VLC simple install ; for 32-bit and 64-bit hosts -->
+<package id='vlc' 
+   name='VideoLAN Client' 
+   revision='%version%' 
+   priority='140' 
+   reboot='false' >
+
+   <variable name="version" value="2.1.0" />
+   <variable name="PKG_DESTINATION"    value="%ProgramFiles(x86)%\VideoLAN" architecture="x64"/>
+   <variable name="PKG_DESTINATION"    value="%ProgramFiles%\VideoLAN" architecture="x86"/>
+   <check type='uninstall' condition='exists' path='VLC media player %version%' />
+
+   <install include="remove"/>
+   <install cmd='%COMSPEC% /C start /wait "VLC" "%SOFTWARE%\vlc\vlc-%version%-win32.exe" /S /NCRC'/>        
+
+   <upgrade include="install"/>
+
+   <remove cmd='%COMSPEC% /c if exist "%PKG_DESTINATION%\VLC\uninstall.exe" "%PKG_DESTINATION%\VLC\uninstall.exe" /S _?=%PKG_DESTINATION%\VLC'/>
+   <remove cmd='%COMSPEC% /C if exist "%PKG_DESTINATION%" rmdir /S /Q "%PKG_DESTINATION%"'/>
+
+</package>
+</packages>

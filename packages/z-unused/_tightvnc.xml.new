@@ -1,0 +1,38 @@
+<package id="tightvnc" name="TightVNC Server" revision="251.0" priority="30" reboot="false">
+        <check type="uninstall" condition="exists" path="TightVNC" />
+        <!-- removing versions 2.0 and earlier if installed. -->
+        <install cmd='"%ProgramFiles%\TightVNC\uninstall.exe" /S' architecture='x86' ><exit code="any" /></install>
+        <install cmd='"%ProgramFiles(x86)%\TightVNC\uninstall.exe" /S' architecture='x64' ><exit code="any" /></install>
+        <install cmd='ping 127.0.0.1 -n 10>NUL' />
+        <install cmd='msiexec /qn /i "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-32bit.msi"' architecture='x86' />
+        <install cmd='msiexec /qn /i "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-64bit.msi"' architecture='x64' />
+        <install cmd='"%ProgramFiles%\TightVNC\tvnserver" -install -silent'>
+                <exit code="1" />
+                <exit code="0" />
+        </install>
+        <install cmd='"%ProgramFiles%\TightVNC\tvnserver" -stop -silent' >
+                <exit code="1" />
+                <exit code="0" />
+        </install>
+        <install cmd='regedit /s "%SOFTWARE%\vnc\settings.reg"' architecture='x86' />
+        <install cmd='regedit /s "%SOFTWARE%\vnc\tightvncx64.reg"' architecture='x64' />
+        <install cmd='"%ProgramFiles%\TightVNC\tvnserver" -start -silent' />
+        <upgrade cmd='"%ProgramFiles%\TightVNC\uninstall.exe" /S' architecture='x86' ><exit code="any" /></upgrade>
+        <upgrade cmd='"%ProgramFiles(x86)%\TightVNC\uninstall.exe" /S' architecture='x64' ><exit code="any" /></upgrade>
+        <upgrade cmd='ping 127.0.0.1 -n 10>NUL' />
+        <upgrade cmd='msiexec /qn /i "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-32bit.msi"' architecture='x86' />
+        <upgrade cmd='msiexec /qn /i "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-64bit.msi"' architecture='x64' />
+        <upgrade cmd='"%ProgramFiles%\TightVNC\tvnserver" -install -silent'>
+                <exit code="1" />
+                <exit code="0" />
+        </upgrade>
+        <upgrade cmd='"%ProgramFiles%\TightVNC\tvnserver" -stop -silent' >
+                <exit code="1" />
+                <exit code="0" />
+        </upgrade>
+        <upgrade cmd='regedit /s "%SOFTWARE%\vnc\settings.reg"' architecture='x86' />
+        <upgrade cmd='regedit /s "%SOFTWARE%\vnc\tightvncx64.reg"' architecture='x64' />
+        <upgrade cmd='"%ProgramFiles%\TightVNC\tvnserver" -start -silent' />
+        <remove cmd='msiexec /qn /x "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-32bit.msi"' architecture='x86' />
+        <remove cmd='msiexec /qn /x "%SOFTWARE%\vnc\tightvnc-2.5.1-setup-64bit.msi"' architecture='x64' />
+ </package>

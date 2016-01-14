@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="cert"
+   name="certificate"
+   revision="1"
+   reboot="false"
+   priority="190"
+   execute="once">
+   
+   <variable name="cert" value="lph-ca.crt" />
+   <variable name="name" value="Le Partenaire de l'Habitat" />
+
+   <install cmd='%SOFTWARE%\cert\certmgr.exe /add %SOFTWARE%\cert\%cert% /all /s /r localMachine root' />
+   <remove  cmd='%SOFTWARE%\cert\certmgr.exe /del /c /n "%name%" /s /r localMachine root' />
+</package>
+</packages>

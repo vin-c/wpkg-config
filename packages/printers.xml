@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="cfd-cq9303"
+   name="Xerox 9303 drivers"
+   revision="1"
+   reboot="false"
+   priority="0">
+
+   <variable name="PKG_PRINTERNAME"    value="Xerox 9303 CFD" />
+   <variable name="PKG_ADDRESS"        value="192.168.1.190" />
+   <variable name="PKG_PRINTERMODEL"   value="Xerox ColorQube 9303 PS" />
+   <variable name="PKG_LANGUAGE"       value="fr-FR"/>
+   <variable name="PKG_PRNPORT"        value="%windir%\System32\prnport.vbs" os="5\.\d\.\d{4}" /> <!-- WinXP/2000 -->
+   <variable name="PKG_PRNPORT"        value="%windir%\System32\Printing_Admin_Scripts\%PKG_LANGUAGE%\prnport.vbs" os="6\.\d\.\d{4}" /> <!-- Vista/Seven -->
+   <variable name="ARCH"               value="x64" architecture="x64"/>
+   <variable name="ARCH"               value="x86" architecture="x86"/>
+   <variable name="PKG_BASE"           value="%SOFTWARE%\printers\CQ930X_5.295.17.0_PS_%ARCH%" />
+   <variable name="PKG_SOURCE"         value="%PKG_BASE%\x2DTESP.inf" />
+   <variable name="PKG_DRIVERSDATA"    value="xDTESPMO.p3p" />
+	 
+   <check type="logical" condition="or">
+      <!-- Windows XP -->
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows NT x86\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"  value="%PKG_DRIVERSDATA%" />
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows x64\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"     value="%PKG_DRIVERSDATA%" />
+      <!-- Windows 7 -->
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File" value="%PKG_DRIVERSDATA%" />
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"    value="%PKG_DRIVERSDATA%" />
+   </check>
+
+   <!-- -s %PKG_SERVER% -->
+   <install cmd='cscript.exe "%PKG_PRNPORT%" -a -r IP_%PKG_ADDRESS% -h %PKG_ADDRESS% -me -y public -i 1 -o raw -n 9100' />
+   <install cmd='rundll32 PrintUI.dll,PrintUIEntry /if /b "%PKG_PRINTERNAME%" /f "%PKG_SOURCE%" /m "%PKG_PRINTERMODEL%" /r "IP_%PKG_ADDRESS%"' />
+   <install cmd="net stop Spooler" />
+   <install cmd="net start Spooler" />
+ 
+   <upgrade include="remove" />
+   <upgrade include="install" />
+ 
+   <remove timeout="15" cmd='rundll32 PrintUI.dll,PrintUIEntry /dl /n "%PKG_PRINTERNAME%"' >
+           <exit code="any" />
+   </remove>
+   <remove timeout="15" cmd='cscript.exe "%PKG_PRNPORT%" -d -r IP_%PKG_ADDRESS%' >
+           <exit code="any" />
+   </remove>
+   <remove timeout="15" cmd='rundll32 PrintUI.dll,PrintUIEntry /dd /m "%PKG_PRINTERMODEL%"' >
+           <exit code="any" />
+   </remove>
+   <remove cmd="net stop Spooler" />
+   <remove cmd="net start Spooler" />
+
+</package>
+
+<package id="cfd-cq8900"
+   name="Xerox 8900 drivers"
+   revision="1"
+   reboot="false"
+   priority="0">
+
+   <variable name="PKG_PRINTERNAME"    value="Xerox 8900 RH CFD" />
+   <variable name="PKG_ADDRESS"        value="192.168.1.192" />
+   <variable name="PKG_PRINTERMODEL"   value="Xerox ColorQube 8900S PS" />
+   <variable name="PKG_LANGUAGE"       value="fr-FR"/>
+   <variable name="PKG_PRNPORT"        value="%windir%\System32\prnport.vbs" os="5\.\d\.\d{4}" /> <!-- WinXP/2000 -->
+   <variable name="PKG_PRNPORT"        value="%windir%\System32\Printing_Admin_Scripts\%PKG_LANGUAGE%\prnport.vbs" os="6\.\d\.\d{4}" /> <!-- Vista/Seven -->
+   <variable name="ARCH"               value="x64" architecture="x64"/>
+   <variable name="ARCH"               value="x86" architecture="x86"/>
+   <variable name="PKG_BASE"           value="%SOFTWARE%\printers\CQ8700-8900_PS_%ARCH%" />
+   <variable name="PKG_SOURCE"         value="%PKG_BASE%\x2DMAMP.inf" />
+   <variable name="PKG_DRIVERSDATA"    value="xDMAMpIY.p3p" />
+	 
+   <check type="logical" condition="or">
+      <!-- Windows XP -->
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows NT x86\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"  value="%PKG_DRIVERSDATA%" />
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\PrintEnvironments\Windows x64\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"     value="%PKG_DRIVERSDATA%" />
+      <!-- Windows 7 -->
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File" value="%PKG_DRIVERSDATA%" />
+      <check type="registry" condition="equals" path="HKLM\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3\%PKG_PRINTERMODEL%\Data File"    value="%PKG_DRIVERSDATA%" />
+   </check>
+
+   <!-- -s %PKG_SERVER% -->
+   <install cmd='cscript.exe "%PKG_PRNPORT%" -a -r IP_%PKG_ADDRESS% -h %PKG_ADDRESS% -me -y public -i 1 -o raw -n 9100' />
+   <install cmd='rundll32 PrintUI.dll,PrintUIEntry /if /b "%PKG_PRINTERNAME%" /f "%PKG_SOURCE%" /m "%PKG_PRINTERMODEL%" /r "IP_%PKG_ADDRESS%"' />
+   <install cmd="net stop Spooler" />
+   <install cmd="net start Spooler" />
+ 
+   <upgrade include="remove" />
+   <upgrade include="install" />
+ 
+   <remove timeout="15" cmd='rundll32 PrintUI.dll,PrintUIEntry /dl /n "%PKG_PRINTERNAME%"' >
+           <exit code="any" />
+   </remove>
+   <remove timeout="15" cmd='cscript.exe "%PKG_PRNPORT%" -d -r IP_%PKG_ADDRESS%' >
+           <exit code="any" />
+   </remove>
+   <remove timeout="15" cmd='rundll32 PrintUI.dll,PrintUIEntry /dd /m "%PKG_PRINTERMODEL%"' >
+           <exit code="any" />
+   </remove>
+   <remove cmd="net stop Spooler" />
+   <remove cmd="net start Spooler" />
+
+</package>
+</packages>

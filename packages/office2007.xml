@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="office2007"
+   name="Microsoft Office 2007"
+   revision="2007"
+   reboot="false"
+   priority="20">
+
+   <check type="uninstall" condition="exists" path="Microsoft Office Professional Plus 2007" />
+
+   <install cmd='"%SOFTWARE%\office2007\install\setup.exe"' >
+      <exit code="1641" />
+   </install>
+
+   <upgrade cmd='msiexec /qn /p "%SOFTWARE%\office2007\install\updates\custom-lph.msp"'>
+      <exit code="1641" />
+   </upgrade>
+
+   <remove cmd='"%SOFTWARE%\office2007\install\setup.exe" /uninstall ProPlus /config "%SOFTWARE%\office2007\install\PROPLUS.WW\silentuninstall.xml"' />
+</package>
+</packages>

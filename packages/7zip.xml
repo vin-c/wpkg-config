@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="7zip"
+   name="7-Zip"
+   revision="920"
+   reboot="false"
+   priority="160">
+
+   <check type='logical' condition='or'>
+      <check type='uninstall' condition='exists' path='7-Zip 9.20' />
+      <check type='uninstall' condition='exists' path='7-Zip 9.20 (x64 edition)' />
+   </check>
+
+   <install cmd='%comspec% /c if exist "%PROGRAMFILES%\7-Zip\Uninstall.exe" "%PROGRAMFILES%\7-Zip\Uninstall.exe" /S' /> 
+   <install cmd='msiexec /i "%SOFTWARE%\7zip\7z920.msi" /qn' architecture='x86' />
+   <install cmd='msiexec /i "%SOFTWARE%\7zip\7z920-x64.msi" /qn' architecture='x64' />
+   <install cmd='"%SOFTWARE%\7zip\7zext.bat">nul'>
+      <exit code="any"/>
+   </install>
+
+   <upgrade cmd='%comspec% /c if exist "%PROGRAMFILES%\7-Zip\Uninstall.exe" "%PROGRAMFILES%\7-Zip\Uninstall.exe" /S' />
+   <upgrade cmd='msiexec /i "%SOFTWARE%\7zip\7z920.msi" /qn' architecture='x86' />
+   <upgrade cmd='msiexec /i "%SOFTWARE%\7zip\7z920-x64.msi" /qn' architecture='x64' />
+   <upgrade cmd='"%SOFTWARE%\7zip\7zext.bat">nul'>
+      <exit code="any"/>
+   </upgrade>
+
+   <remove cmd='msiexec /x "%SOFTWARE%\7zip\7z920.msi" /qn' architecture='x86' />
+   <remove cmd='msiexec /x "%SOFTWARE%\7zip\7z920-x64.msi" /qn' architecture='x64' />
+
+</package>
+</packages>

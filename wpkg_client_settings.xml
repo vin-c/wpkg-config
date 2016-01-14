@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<file>\\srv\wpkg\wpkg.js</file>
+	<net-use-machine-account>YES</net-use-machine-account>
+	<path-user></path-user>
+	<path-password></path-password>
+	<exec-user>SYSTEM</exec-user>
+	<exec-password></exec-password>
+	<parameters>/synchronize /nonotify /quiet /debug</parameters>
+	<silent>YES</silent>
+	<pre-action></pre-action>
+	<post-action></post-action>
+	<show-GUI>NO</show-GUI>
+	<logon-delay>0</logon-delay>
+	<logon-message-title>::LPH:: Deploiement logiciels</logon-message-title>
+	<logon-message-logo-picture></logon-message-logo-picture>
+	<logon-message-1>Installation des applications en cours ...</logon-message-1>
+	<logon-message-2>Merci de patienter, ne pas redémarrer ou éteindre l'ordinateur</logon-message-2>
+	<script-variable name="software">\\srv\wpkg\softwares</script-variable>
+	<priority>normal</priority>
+	<stop-service-after-done>YES</stop-service-after-done>
+	<laptop-mode>NO</laptop-mode>
+	<server-connecting-method>standard</server-connecting-method>
+	<server-connecting-ip></server-connecting-ip>
+	<server-connecting-timeout>3</server-connecting-timeout>
+	<server-connecting-script-timeout>3</server-connecting-script-timeout>
+	<server-connecting-script-file></server-connecting-script-file>
+	<log-file></log-file>
+	<run-on-shutdown>NO</run-on-shutdown>
+	<shutdown-delay>10</shutdown-delay>
+	<logon-interrupt-password></logon-interrupt-password>
+	<repeat-count-on-failure>0</repeat-count-on-failure>
+</configuration>

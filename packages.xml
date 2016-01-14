@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Database of packages which are ready to be assigned to workstations. Assign
+	these packages by adding them to profiles which you associate with
+	workstations.
+
+	More individual application package examples can be found here:
+		packages/
+-->
+
+<packages:packages xmlns:packages="http://www.wpkg.org/packages"
+	xmlns:wpkg="http://www.wpkg.org/wpkg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.wpkg.org/packages xsd/packages.xsd">
+
+	<!--
+		Packages need to specify an "id" and a "name" at least.
+		The ID has to be unique and is used to refer to the package in profiles.
+	-->
+
+</packages:packages>

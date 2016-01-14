@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+   <!--
+      A special package which is enforcing time synchronization using a time
+      server.
+      It's using the notify attribute to disable notifications about package
+      execution. It also uses execute="always" attribute which instructs WPKG
+      to re-run the commands even if the package is already installed.
+   -->
+<package id="time" 
+   name="Time Synchronization" 
+   revision="1"
+   reboot="false" 
+   priority="180" 
+   notify="false" 
+   execute="always">
+
+   <commands>
+   <!--
+      Due to execute="always" this command will be run on each WPKG execution
+   -->
+      <command type="install" cmd="net time \\srv /set /yes" />
+   </commands>
+
+</package>
+</packages>

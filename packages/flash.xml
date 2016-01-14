@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="flash"
+   name="Adobe Flash Player"
+   revision="%PKG_VERSION%"
+   reboot="false"
+   priority="100">
+
+  	<variable name="PKG_VERSION"          value="11.9.900.117" />
+  	<variable name="shortversion"         value="11_9_900_117" />
+  	<variable name="PKG_SOURCE"           value="%SOFTWARE%\flash\%PKG_VERSION%" />
+  	<variable name="PKG_DESTINATION"      value="%SystemRoot%\System32\Macromed\Flash"/>
+  	<variable name="PKG_DESTINATION"      value="%SystemRoot%\SysWOW64\Macromed\Flash" architecture="x64"/>
+  	<variable name="PKG_DESTINATION_X64"  value="%SystemRoot%\System32\Macromed\Flash"/>
+  	<variable name="PKG_FILE_ACTIVEX"     value="Flash32_%shortversion%.ocx" />
+  	<variable name="PKG_FILE_PLUGIN"      value="NPSWF32_%shortversion%.dll" />
+  	<variable name="PKG_FILE_ACTIVEX_X64" value="Flash64_%shortversion%.ocx" />
+  	<variable name="PKG_FILE_PLUGIN_X64"  value="NPSWF64_%shortversion%.dll" />
+
+   <check type="uninstall" condition="versionequalto"        path="Adobe Flash Player .+ ActiveX.*"              value="%PKG_VERSION%" />
+   <check type="uninstall" condition="versionequalto"        path="Adobe Flash Player .+ Plugin.*"               value="%PKG_VERSION%" />
+   <check type="file"      condition="versiongreaterorequal" path="%PKG_DESTINATION%\%PKG_FILE_ACTIVEX%"         value="%PKG_VERSION%" />
+   <check type="file"      condition="versiongreaterorequal" path="%PKG_DESTINATION%\%PKG_FILE_PLUGIN%"          value="%PKG_VERSION%" />
+   <check type="file"      condition="versiongreaterorequal" path="%PKG_DESTINATION_X64%\%PKG_FILE_ACTIVEX_X64%" value="%PKG_VERSION%" architecture="x64" />
+   <check type="file"      condition="versiongreaterorequal" path="%PKG_DESTINATION_X64%\%PKG_FILE_PLUGIN_X64%"  value="%PKG_VERSION%" architecture="x64" />
+
+   <install include="remove" />
+   <install cmd='"%PKG_SOURCE%\install_flash_player_11_active_x.exe" /install ' />
+   <install cmd='"%PKG_SOURCE%\install_flash_player_11_plugin.exe" /install ' />
+
+   <upgrade include="install" />
+
+   <remove cmd="taskkill /F /IM Firefox.exe">
+      <exit code="0" />
+      <exit code="128" />
+      <exit code="1" />
+   </remove>
+   <remove cmd="taskkill /F /IM iexplore.exe">
+      <exit code="0" />
+      <exit code="128" />
+      <exit code="1" />
+   </remove>
+   <remove cmd='"%PKG_SOURCE%\uninstall_flash_player.exe" -uninstall' >
+      <exit code="any" />
+   </remove>
+</package>
+</packages>

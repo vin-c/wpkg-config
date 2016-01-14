@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages
+	xmlns:xsi="http://www.wpkg.org/packages"
+	xsi:noNamespaceSchemaLocation="../xsd/packages.xsd" >
+
+<package id="cdburnerxp"
+   name="CDBurnerXP"
+   revision="452"
+   reboot="false"
+   priority="30">
+
+   <variable name="PKG_NAME"    value="cdbxp_setup_4.5.2.4291_minimal.exe" />
+
+   <check type="logical" condition="and">
+      <check type="uninstall" condition="exists" path="CDBurnerXP" />
+      <check type='file' condition='versiongreaterorequal' path='%ProgramFiles%\CDBurnerXP\cdbxpp.exe' value='4.5.2.4291' />
+   </check>
+
+   <install cmd='"%SOFTWARE%\cdburnerxp\%PKG_NAME%" /verysilent ALLUSERS=1 /LOADINF="%SOFTWARE%\cdburnerxp\default.cfg"' />
+   <install cmd='%ComSpec% /c del "%ALLUSERSPROFILE%\Desktop\CDBurnerXP.lnk"' />
+
+   <upgrade cmd='"%SOFTWARE%\cdburnerxp\%PKG_NAME%" /verysilent ALLUSERS=1 /LOADINF="%SOFTWARE%\cdburnerxp\default.cfg"' />
+   <upgrade cmd='%ComSpec% /c del "%ALLUSERSPROFILE%\Desktop\CDBurnerXP.lnk"' />
+
+   <remove cmd='"%programfiles%\CDBurnerXP\unins000.exe" /VERYSILENT _?=%ProgramFiles%\CDBurnerXP' />
+   <remove cmd='%COMSPEC% /C if exist "%programfiles%\CDBurnerXP" rmdir /q /s "%programfiles%\CDBurnerXP"' />
+
+</package>
+</packages>
